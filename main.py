@@ -23,6 +23,7 @@ def get_weather():
   url = "https://restapi.amap.com/v3/weather/weatherInfo?key=00c14e612859ea5ca608e65d61c3e345&city=370200"
   res = requests.get(url).json()
   print('天气'+str(res))
+  print('天气0'+str(res['lives'][0]))
   weather = res['lives'][0]
   return weather['weather'], math.floor(weather['temperature'])
 
