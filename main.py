@@ -43,9 +43,11 @@ def get_words():
   word = words.json()['data']['text']
   length = len(words.json()['data']['text'])
   # if 20 < length < 40:
-  word1 = word[0,20]
-  word2 = word[20,40]
-    
+  word1 = word[0:20]
+  if 20 < length:
+    word2 = word[20:40]
+  else:
+    word2 = "心"
   # if words.status_code != 200:
   #   return get_words()
   return word1, word2
