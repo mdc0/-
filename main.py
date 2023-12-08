@@ -40,19 +40,28 @@ def get_birthday():
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
   print('文字'+str(words.json()['data']['text']))
+  word = words.json()['data']['text']
+  length = len(words.json()['data']['text'])
+  # if 20 < length < 40:
+  word1 = word[0,20]
+  word2 = word[20,40]
+    
   # if words.status_code != 200:
   #   return get_words()
-  return words.json()['data']['text']
+  return word1, word2
 
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
 # def get_weChat():
 client = WeChatClient(app_id, app_secret)
-
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+words1, words2 = get_words()
+
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()}
+        ,"birthday_left":{"value":get_birthday()},"words1":{"value":words1, "color":get_random_color()}
+       ,"words2":{"value":words2, "color":get_random_color()}}
 # data = {"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 print('推送：'+str(data))
 res = wm.send_template(user_id, template_id, data)
